@@ -7,3 +7,9 @@ from dotenv import load_dotenv
 load_dotenv()
 client = Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
 
+def extract_data(file_path):
+  """
+  Extract structured data from a PDF file and send it to the Claude Vision API.
+  Returns an object with keys: date, vendor, description, part number, PO, document type.
+  """
+
