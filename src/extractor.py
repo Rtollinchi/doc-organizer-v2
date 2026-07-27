@@ -3,8 +3,10 @@
 import os
 from anthropic import Anthropic
 from dotenv import load_dotenv
+from pdf2image import convert_from_path
 
 load_dotenv()
+
 client = Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
 
 def extract_data(file_path):
