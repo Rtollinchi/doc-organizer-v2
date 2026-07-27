@@ -1,6 +1,7 @@
 # Takes a PDF file and sends it to Claude Vision API
 # Returns structured data: date, vendor, description, part number, PO, document type
 import os
+import base64
 from anthropic import Anthropic
 from dotenv import load_dotenv
 from pdf2image import convert_from_path
@@ -14,4 +15,8 @@ def extract_data(file_path):
   Extract structured data from a PDF file and send it to the Claude Vision API.
   Returns an object with keys: date, vendor, description, part number, PO, document type.
   """
+  documents = convert_from_path(file_path)
+  for doc in documents:
+    pass
+
 
