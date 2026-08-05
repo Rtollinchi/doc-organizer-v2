@@ -1,20 +1,25 @@
 import pytest
-import base64
 from src.extractor import extract_data
+import json
 
-def test_does_not_return_empty_list():
+def test_returns_a_string():
     result = extract_data("samples/sample.pdf")
-    assert isinstance(result, list)
-    assert len(result) > 0
+    assert isinstance(result, str)
 
-def test_returns_list_of_strings():
+def test_returns_valid_json():
     result = extract_data("samples/sample.pdf")
-    assert all(isinstance(item, str) for item in result)
+    try:
+        data = json.loads(result)
+    except json.JSONDecodeError:
+        pytest.fail("Result is not valid JSON")
 
-def test_returns_valid_base64():
-    result = extract_data("samples/sample.pdf")
-    for item in result:
-        try:
-            base64.b64decode(item)
-        except Exception:
-            pytest.fail(f"Item is not valid base64: {item}")
+    expected_keys = {
+        "date",
+        "vendor",
+        "description",
+        "purchase_order_number",
+        "part_number",
+        "who_ordered_it",
+        "doc_type"
+    }
+    assert set(data.keys()) == expected_keys
